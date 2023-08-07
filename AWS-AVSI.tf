@@ -102,23 +102,22 @@ resource "aws_instance" "JESTIVAL-INSTANCE" {
 
   user_data = <<-EOT
               #!/bin/bash
-			  # Mise à jour du système
+              
+              # Mise à jour du système
               sudo apt update
               sudo apt upgrade -y
 			  
               # Installation de Docker
               sudo apt install -y docker
-			  
-			  # Installation d'Ansible
-			  sudo apt install ansible sshpass
-			  
+
+              # Installation de Java et de curl (nécessaire à Jenkins)
+              sudo apt install openjdk-17-jre curl systemctl -y
+              
+              # Installation d'Ansible
+              sudo apt install ansible sshpass
 			  
               # Permet de lancer des conteneurs Docker en mode "unprivileged"
               sudo usermod -v 1000000-1000999999 -w 1000000-1000999999 root
-
-              # Installation de Java et de curl (nécessaire à Jenkins)
-              sudo apt update
-              sudo apt install openjdk-17-jre curl systemctl -y
 
               # Installation de Jenkins
               curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
@@ -136,7 +135,6 @@ resource "aws_instance" "JESTIVAL-INSTANCE" {
               docker pull tenable/nessus:latest-ubuntu
               docker run -d --name Nessus -p 8834:8834 tenable/nessus:latest-ubuntu
 
-              # [Insérez ici les commandes d'installation de Nessus]
               EOT
 }
 
