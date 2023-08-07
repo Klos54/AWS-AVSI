@@ -58,6 +58,14 @@ resource "aws_security_group" "JESTIVAL-SG" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "JESTIVAL-SG-ALLOW-NESSUS"
+    from_port   = 8834
+    to_port     = 8834
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Autoriser l'accès SSH uniquement depuis l'adresse IP spécifique
   # Remplacez "xxx.xxx.xxx.xxx" par l'adresse IP autorisée
   ingress {
