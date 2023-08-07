@@ -80,7 +80,7 @@ resource "aws_security_group" "JESTIVAL-SG" {
   }
 }
 
-# Création de l'instance EC2 avec Docker, Kubernetes, Jenkins et Nessus
+# Création de l'instance EC2 avec Docker, Jenkins et Nessus
 resource "aws_instance" "JESTIVAL-INSTANCE" {
   ami                          = "ami-0f61de2873e29e866"
   subnet_id                    = aws_subnet.JESTIVAL-SUBNET1.id
@@ -94,10 +94,16 @@ resource "aws_instance" "JESTIVAL-INSTANCE" {
 
   user_data = <<-EOT
               #!/bin/bash
-              # Installation de Docker
+			  # Mise à jour du système
               sudo apt update
               sudo apt upgrade -y
+			  
+              # Installation de Docker
               sudo apt install -y docker
+			  
+			  # Installation d'Ansible
+			  sudo apt install ansible sshpass
+			  
 			  
               # Permet de lancer des conteneurs Docker en mode "unprivileged"
               sudo usermod -v 1000000-1000999999 -w 1000000-1000999999 root
