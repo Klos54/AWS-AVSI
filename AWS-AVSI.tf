@@ -80,7 +80,7 @@ resource "aws_security_group" "JESTIVAL-SG" {
   }
 }
 
-# Création de l'instance EC2 avec Docker, Jenkins et Nessus
+# Création de l'instance EC2 avec Docker, Jenkins, Ansible et Nessus
 resource "aws_instance" "JESTIVAL-INSTANCE" {
   ami                          = "ami-0f61de2873e29e866"
   subnet_id                    = aws_subnet.JESTIVAL-SUBNET1.id
